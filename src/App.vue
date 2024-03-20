@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <StartButton @openPopup="showPopup = true" />
+    <MyPopup
+      v-if="showPopup"
+      @closePopup="showPopup = false"
+      @submitData="handleSubmit"
+    />
+    <div v-if="submittedData">
+      <h2>Отправленные данные:</h2>
+      <pre>{{ submittedData }}</pre>
+    </div>
+    <MyMenu />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import StartButton from "./components/StartButton.vue";
+import MyPopup from "./components/MyPopup.vue";
+import MyMenu from "./components/MyMenu.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    StartButton,
+    MyPopup,
+    MyMenu,
+  },
+  data() {
+    return {
+      showPopup: false,
+      submittedData: null,
+    };
+  },
+  methods: {
+    handleSubmit(data) {
+      this.submittedData = data;
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
